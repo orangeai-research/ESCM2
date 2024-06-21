@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F  
 
 from torch.utils.data.dataloader import  DataLoader
-from dataloader import RecDataset
+from ESCM2.dataloader import RecDataset
   
 class ESCM2(nn.Module):  
     def __init__(self, sparse_feature_number, sparse_feature_dim, num_field,  
@@ -282,9 +282,7 @@ class Pipeline(object):
         out_list = model(sparse_tensor) 
         ctr_out, ctr_out_one, cvr_out, cvr_out_one, ctcvr_prop, ctcvr_prop_one = out_list  
         loss = self.build_loss(config, ctr_out_one, label_ctr, ctcvr_prop_one, label_ctcvr, cvr_out_one, out_list)  
-  
-        # 更新metrics（注意：这些将在外部计算）  
-        # metrics_list[0].update(...)  # 示例代码，实际计算将在外部进行  
+
   
         print_dict = {'loss': loss.item()}  
         return loss, metrics_list, print_dict  
@@ -294,11 +292,8 @@ class Pipeline(object):
         with torch.no_grad(): 
             sparse_tensor, label_ctr, label_ctcvr = self.create_feeds(batch_data)  
             out_list = model(sparse_tensor)  
-  
-            # 假设out_list包含与train_forward相同的输出  
+
             ctr_out, ctr_out_one, cvr_out, cvr_out_one, ctcvr_prop, ctcvr_prop_one = out_list  
   
-            # 更新metrics（注意：这些将在外部计算）  
-            # metrics_list[0].update(...)  # 示例代码，实际计算将在外部进行  
   
         return metrics_list, None
