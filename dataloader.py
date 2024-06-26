@@ -19,7 +19,7 @@ class RecDataset(IterableDataset):
         ]
         self.all_field_id_dict = defaultdict(int)
         # self.max_len = self.config.get("hyper_parameters.max_len", 3)
-        self.max_len = config.max_len
+        self.max_len = self.config.max_len
         for i, field_id in enumerate(all_field_id):
             self.all_field_id_dict[field_id] = [False, i]
         self.padding = 0
@@ -60,6 +60,13 @@ class RecDataset(IterableDataset):
                                 np.array(output[index][1]).astype('int64'))
                     output_list.append(np.array([ctr]).astype('int64'))
                     output_list.append(np.array([ctcvr]).astype('int64'))
-                    #print("output_list:", output_list)
+                    #print("----------------------output_list-------------\n:", output_list)
+                    '''
+                        ----------------------output_list-------------
+                         [array([28874,     0,     0]), array([ 534, 6000, 3724]), array([28859, 28860, 28861]), array([28851, 28852, 28853]), array([12099, 28830, 28831]), array([28844,     0,     0]), array([12096,     0,     0]), array([2670,    0,    0]), array([11209,     0,     0]), array([8438,    0,    0]), 
+                         array([15,  0,  0]), array([16,  0,  0]), array([10537,     0,     0]), array([28892,     0,     0]), array([18497,     0,     0]), array([0, 0, 0]), array([20565, 20558, 28887]), array([28891,     0,     0]), array([0, 0, 0]), array([0, 0, 0]), array([0, 0, 0]), array([0, 0, 0]), array([9281,    0,    0]), 
+                         array([0]), array([0])]
+                    
+                    '''
              
                     yield output_list
